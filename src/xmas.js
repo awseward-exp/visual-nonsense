@@ -2,16 +2,18 @@
 
 var rp = require('request-promise');
 
-var determineXmas = (resp) => {
+var isMatch = (xmas, today) => {
+  return xmas.year == today.getFullYear()
+    && xmas.christmas_day.getDateString() == today.getDateString();
+};
+
+var determineXmas = resp => {
   var xmases = JSON.parse(resp).christmases;
   var today = new Date();
 
-  var good = xmases.filter(xmas => {
-    return xmas.year === today.getFullYear()
-      && xmas.christmas_day.getDateString() === today.getDateString();
-  });
+  var matches = xmases.filter(xmas => isMatch(xmas, today));
 
-  declareXmasOrNot(good.length !== 0);
+  declareXmasOrNot(matches.length !== 0);
 };
 
 var declareXmasOrNot = status => {

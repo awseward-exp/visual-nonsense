@@ -20,10 +20,10 @@ gulp.task('build', ['clean'], function() {
   gulp.src('package.json')
     .pipe(gulp.dest('./dist'));
 
-  gulp.src('index.html')
+  gulp.src('src/index.html')
     .pipe(gulp.dest('./dist'));
 
-  gulp.src('*.js')
+  gulp.src('src/*.js')
     .pipe(es6transpiler())
     .pipe(gulp.dest('./dist'));
 });
