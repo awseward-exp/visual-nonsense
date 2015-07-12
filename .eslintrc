@@ -9,7 +9,7 @@
     "node": true
   },
   "rules": {
-    "comma-dangle": "always-multiline",
+    "comma-dangle": [1, "always-multiline"],
     "semi": 2
   }
 }
