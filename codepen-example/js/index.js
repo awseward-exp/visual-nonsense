@@ -17,9 +17,9 @@
   }
 
   function Blob(x, y) {
-    this.blob = document.createElement('canvas');
+    this.blob = document.createElement("canvas");
     this.blob.width = this.blob.height = rad * 2;
-    var ict = this.blob.getContext('2d');
+    var ict = this.blob.getContext("2d");
     ict.fillStyle = "#69face";
     ict.arc(rad, rad, rad, 0, 2 * Math.PI);
     ict.fill();
@@ -44,9 +44,9 @@
       {x: 0.75, y: 0.75},
     ];
 
-    for (let i = 0; i < coords.length; i++) {
+    for (let iter = 0; iter < coords.length; iter++) {
       let coord = coords[i];
-      let x = canvas.width * cood.x + this.x - rad;
+      let x = canvas.width * coord.x + this.x - rad;
       let y = canvas.height * coord.y + this.y - rad;
 
       ctx.drawImage(this.blob, x, y);
