@@ -1,7 +1,7 @@
 {
-  "name": "hello-electron",
+  "name": "visual-nonsense",
   "version": "0.0.0",
-  "description": "A first look at GitHub's Electron application framework",
+  "description": "A place to play around with visual nonsense",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,11 +10,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/awseward/hello-electron.git"
+    "url": "git+https://github.com/awseward-exp/visual-nonsense.git"
   },
   "bugs": {
-    "url": "https://github.com/awseward/hello-electron/issues"
+    "url": "https://github.com/awseward-exp/visual-nonsense/issues"
   },
+  "homepage": "https://github.com/awseward-exp/visual-nonsense#readme",
   "devDependencies": {
     "del": "^1.2.0",
     "electron-prebuilt": "^0.29.2",
@@ -23,7 +24,6 @@
     "gulp-task-listing": "^1.0.1",
     "shelljs": "^0.5.1"
   },
-  "homepage": "https://github.com/awseward/hello-electron#readme",
   "dependencies": {
     "request": "^2.58.0",
     "request-promise": "^0.4.2"
