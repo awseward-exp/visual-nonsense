@@ -7,7 +7,7 @@
   var blobs = [],
     Ni = 10,
     rad = 40;
-  for (var i = 0; i < Ni; i++) {
+  for (let i = 0; i < Ni; i++) {
     blobs.push(
       new Blob(
         rad * Math.cos((2.5 * Math.PI) / Ni * i),
@@ -44,7 +44,7 @@
       {x: 0.75, y: 0.75},
     ];
 
-    for (let iter = 0; iter < coords.length; iter++) {
+    for (let i = 0; i < coords.length; i++) {
       let coord = coords[i];
       let x = canvas.width * coord.x + this.x - rad;
       let y = canvas.height * coord.y + this.y - rad;
