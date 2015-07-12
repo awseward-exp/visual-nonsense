@@ -22,6 +22,9 @@ gulp.task("build", ["clean"], function() {
   gulp.src("src/index.html")
     .pipe(gulp.dest("./dist"));
 
+  gulp.src("src/*.css")
+    .pipe(gulp.dest("dist"));
+
   gulp.src("src/*.js")
     .pipe(es6transpiler())
     .pipe(gulp.dest("./dist"));
