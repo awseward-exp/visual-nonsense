@@ -2,10 +2,12 @@ PreCommit:
   TrailingWhitespace:
     enabled: true
     problem_on_unmodified_line: ignore
+  EsLint:
+    enabled: true
+    on_fail: warn
 
 CommitMsg:
   HardTabs:
     enabled: true
-
   RussianNovel:
     enabled: true
