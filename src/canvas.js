@@ -5,6 +5,8 @@ module.exports = {
     let canvas = doc.createElement("canvas");
     canvas.onselectstart = () => { return false; };
     canvas.ondrag = () => { return false; };
+
+    return canvas;
   },
 
   getPointer: () => {
@@ -82,16 +84,18 @@ module.exports = {
   getResizeFn: (state, canvas) => {
     "use strict";
 
-    // Really curious why this identity multiplication is happening here...
-    let w = canvas.offsetWidth * 1;
-    let h = canvas.offsetHeight * 1;
+    return () => {
+      // Really curious why this identity multiplication is happening here...
+      let w = canvas.offsetWidth * 1;
+      let h = canvas.offsetHeight * 1;
 
-    if (w !== state.width || h !== state.height) {
-      state.width = canvas.width = w;
-      state.height = canvas.height = h;
+      if (w !== state.width || h !== state.height) {
+        state.width = canvas.width = w;
+        state.height = canvas.height = h;
 
-      if (state.resize) { state.resize(); }
-    }
+        if (state.resize) { state.resize(); }
+      }
+    };
   },
 
   setUpEvents: (win, doc, canvas, resizeFn, downFn, upFn, moveFn) => {
