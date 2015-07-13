@@ -64,6 +64,9 @@ function Blob(x, y, radius) {
 
   let helper = require("./canvas.js");
   let canvas = helper.getCanvas(document);
+
+  document.body.appendChild(canvas);
+
   let context = canvas.getContext("2d");
   let pointer = helper.getPointer();
   let state = helper.getStateObject();
