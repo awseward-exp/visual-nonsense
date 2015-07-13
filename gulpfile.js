@@ -34,3 +34,11 @@ gulp.task("run", ["build"], function() {
   var command = require("electron-prebuilt") + " " + path.join(__dirname, "dist");
   shell.exec(command);
 });
+
+// This could probably use some work
+gulp.task("fixjs", function() {
+  var watcher = gulp.watch("src/*.js");
+  watcher.on("change", function() {
+    shell.exec("eslint src/");
+  });
+});

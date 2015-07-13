@@ -1,67 +1,94 @@
-(function() {
+let getBlobs = (count, radius) => {
   "use strict";
 
-  var canvas = require("./canvas-thing.js")();
-  var ctx = canvas.ctx;
-  var pointer = canvas.pointer;
-  var blobs = [],
-    Ni = 10,
-    rad = 40;
-  for (let i = 0; i < Ni; i++) {
+  let blobs = [];
+
+  for (let i = 0; i < count; i++) {
     blobs.push(
       new Blob(
-        rad * Math.cos((2.5 * Math.PI) / Ni * i),
-        rad * Math.sin((0.5 * Math.PI) / Ni * i)
-      )
-    );
+        radius * Math.cos(2.5 * Math.PI / count * i),
+        radius * Math.sin(0.5 * Math.PI / count * i)));
   }
 
-  function Blob(x, y) {
-    this.blob = document.createElement("canvas");
-    this.blob.width = this.blob.height = rad * 2;
-    var ict = this.blob.getContext("2d");
-    ict.fillStyle = "#69face";
-    ict.arc(rad, rad, rad, 0, 2 * Math.PI);
-    ict.fill();
-    this.x = x;
-    this.y = y;
-    this.x0 = x;
-    this.y0 = y;
-    this.r = rad * rad * 1.6;
-  }
+  return blobs;
+};
 
-  Blob.prototype.anim = function () {
-    var dx = pointer.x - this.x - canvas.width * 0.5;
-    var dy = pointer.y - this.y - canvas.height * 0.5;
-    var d = Math.sqrt(dx * dx + dy * dy);
-    this.x = this.x - this.r / d * (dx / d) + (this.x0 - this.x) * 0.5;
-    this.y = this.y - this.r / d * (dy / d) + (this.y0 - this.y) * 0.5;
+let getInitialPointer = () => {
+  "use strict";
 
-    var coords = [
-      {x: 0.25, y: 0.25},
-      {x: 0.25, y: 0.75},
-      {x: 0.75, y: 0.25},
-      {x: 0.75, y: 0.75},
-    ];
-
-    for (let i = 0; i < coords.length; i++) {
-      let coord = coords[i];
-      let x = canvas.width * coord.x + this.x - rad;
-      let y = canvas.height * coord.y + this.y - rad;
-
-      ctx.drawImage(this.blob, x, y);
-    }
+  return {
+    x: 0,
+    y: 0,
+    isDown: false,
+    down: null,
+    up: null,
+    move: null,
   };
+};
 
-  function loop(el) {
-    el.anim();
+function Blob(x, y, radius) {
+  "use strict";
+
+  let canvas = document.createElement("canvas");
+  canvas.width = canvas.height = radius * 2;
+
+  let context = canvas.getContext("2d");
+  context.fillStyle = "#69face";
+  context.arc(radius, radius, radius, 0, 2 * Math.PI);
+  context.fill();
+
+  this.blob = canvas;
+  this.x = x;
+  this.y = y;
+  this.x0 = x;
+  this.y0 = y;
+  this.r = radius * radius * 1.6;
+  this.radius = radius;
+}
+
+Blob.prototype.animate = (canvas, pointer, context, radius) => {
+  "use strict";
+
+  let dx = pointer.x - this.x - canvas.width * 0.5;
+  let dy = pointer.y - this.y - canvas.height * 0.5;
+  let d = Math.sqrt(dx * dx + dy * dy);
+
+  this.x = this.x - this.r / d * dx / d + (this.x0 - this.x) * 0.5;
+  this.y = this.y - this.r / d * dx / d + (this.y0 - this.y) * 0.5;
+
+  let coords = [
+    {x: 0.25, y: 0.25},
+    {x: 0.25, y: 0.75},
+    {x: 0.75, y: 0.25},
+    {x: 0.75, y: 0.75},
+  ];
+
+  for (let i = 0; i < coords.length; i++) {
+    let coord = coords[i];
+    let x = canvas.width * coord.x + this.x - radius;
+    let y = canvas.height * coord.y + this.y - radius;
+
+    context.drawImage(this.blob, x, y);
   }
+};
+
+(() => {
+  "use strict";
+
+  let canvasHelper = require("./canvas.js");
+  let canvas = canvasHelper.getCanvas(document);
+  let context = canvas.getContext("2d");
+  let pointer = getInitialPointer();
+  let blobs = getBlobs(100, 50);
 
   function run() {
     requestAnimationFrame(run);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    blobs.forEach(loop);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    blobs.forEach(b => {
+      b.animate(canvas, pointer, context, b.radius);
+    });
   }
+
   pointer.y = 10000;
   run();
 })();
