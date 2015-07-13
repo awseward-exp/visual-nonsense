@@ -13,19 +13,6 @@ let getBlobs = (count, radius) => {
   return blobs;
 };
 
-let getInitialPointer = () => {
-  "use strict";
-
-  return {
-    x: 0,
-    y: 0,
-    isDown: false,
-    down: null,
-    up: null,
-    move: null,
-  };
-};
-
 function Blob(x, y, radius) {
   "use strict";
 
@@ -75,11 +62,21 @@ Blob.prototype.animate = (canvas, pointer, context, radius) => {
 (() => {
   "use strict";
 
-  let canvasHelper = require("./canvas.js");
-  let canvas = canvasHelper.getCanvas(document);
+  let helper = require("./canvas.js");
+  let canvas = helper.getCanvas(document);
   let context = canvas.getContext("2d");
-  let pointer = getInitialPointer();
+  let pointer = helper.getPointer();
+  let state = helper.getStateObject();
   let blobs = getBlobs(100, 50);
+
+  helper.setUpEvents(
+    window,
+    document,
+    canvas,
+    helper.getResizeFn(state, canvas),
+    helper.getDownFn(document, pointer),
+    helper.getUpFn(document, pointer),
+    helper.getMoveFn(document, pointer));
 
   function run() {
     requestAnimationFrame(run);

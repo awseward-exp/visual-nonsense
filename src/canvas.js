@@ -7,7 +7,7 @@ module.exports = {
     canvas.ondrag = () => { return false; };
   },
 
-  getInitialPointer: () => {
+  getPointer: () => {
     "use strict";
 
     return {
@@ -17,6 +17,16 @@ module.exports = {
       down: null,
       up: null,
       move: null,
+    };
+  },
+
+  getStateObject: () => {
+    "use strict";
+
+    return {
+      width: 0,
+      height: 0,
+      resize: () => {},
     };
   },
 
