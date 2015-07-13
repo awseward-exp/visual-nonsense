@@ -69,18 +69,18 @@ module.exports = {
     };
   },
 
-  getResizeFn: (something, canvas) => {
+  getResizeFn: (state, canvas) => {
     "use strict";
 
     // Really curious why this identity multiplication is happening here...
     let w = canvas.offsetWidth * 1;
     let h = canvas.offsetHeight * 1;
 
-    if (w !== something.width || h !== something.height) {
-      something.width = canvas.width = w;
-      something.height = canvas.height = h;
+    if (w !== state.width || h !== state.height) {
+      state.width = canvas.width = w;
+      state.height = canvas.height = h;
 
-      if (something.resize) { something.resize(); }
+      if (state.resize) { state.resize(); }
     }
   },
 
@@ -88,6 +88,7 @@ module.exports = {
     "use strict";
 
     win.addEventListener("resize", resizeFn, false);
+
     resizeFn();
 
     if ("ontouchstart" in win) {
