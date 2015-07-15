@@ -2,10 +2,18 @@ PreCommit:
   TrailingWhitespace:
     enabled: true
     problem_on_unmodified_line: ignore
+  EsLint:
+    enabled: true
+  FearOfCommitment:
+    enabled: true
 
 CommitMsg:
   HardTabs:
     enabled: true
 
   RussianNovel:
+    enabled: true
+
+PrePush:
+  PrintDiffUrls:
     enabled: true
