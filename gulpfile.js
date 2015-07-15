@@ -12,7 +12,7 @@ gulp.task("help", gulpList);
 gulp.task("default", ["help"]);
 
 gulp.task("clean", function() {
-  del(["./dist/*"]);
+  return del(["./dist/*"]);
 });
 
 gulp.task("build", ["clean"], function() {
@@ -22,12 +22,12 @@ gulp.task("build", ["clean"], function() {
   gulp.src("src/index.html")
     .pipe(gulp.dest("./dist"));
 
-  gulp.src("src/*.js")
+  return gulp.src("src/*.js")
     .pipe(es6transpiler())
     .pipe(gulp.dest("./dist"));
 });
 
 gulp.task("run", ["build"], function() {
   var command = require("electron-prebuilt") + " " + path.join(__dirname, "dist");
-  shell.exec(command);
+  return shell.exec(command);
 });
