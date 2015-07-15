@@ -19,7 +19,10 @@ gulp.task("build", ["clean"], function() {
   gulp.src("package.json")
     .pipe(gulp.dest("./dist"));
 
-  gulp.src("src/index.html")
+  gulp.src("src/*.html")
+    .pipe(gulp.dest("./dist"));
+
+  gulp.src("src/*.css")
     .pipe(gulp.dest("./dist"));
 
   return gulp.src("src/*.js")
@@ -31,3 +34,13 @@ gulp.task("run", ["build"], function() {
   var command = require("electron-prebuilt") + " " + path.join(__dirname, "dist");
   return shell.exec(command);
 });
+
+gulp.task("lintwatch", function() {
+  var watcher = gulp.watch("src/*.js");
+  var lint = function() { shell.exec("eslint src/"); };
+
+  lint();
+  return watcher.on("change", lint);
+});
+
+gulp.task("lw", ["lintwatch"]);
